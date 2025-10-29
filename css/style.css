@@ -303,10 +303,64 @@ body {
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Overlay pour gérer le scroll des cartes Facebook */
+.fb-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(24, 119, 242, 0.05);
+    backdrop-filter: blur(1px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.fb-card:hover .fb-card-overlay {
+    opacity: 1;
+}
+
+.fb-card-overlay.hidden {
+    display: none;
+}
+
+.fb-card-overlay-text {
+    text-align: center;
+    color: #1877f2;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.fb-card:hover .fb-card-overlay-text {
+    transform: scale(1.05);
+}
+
+.fb-card-overlay-text svg {
+    margin-bottom: 10px;
+    stroke: #1877f2;
+}
+
+.fb-card-overlay-text p {
+    margin: 0;
 }
 
 .fb-feed {
     min-height: 200px;
+    position: relative;
 }
 
 /* Responsive */

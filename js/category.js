@@ -138,10 +138,18 @@ async function loadCategory() {
 
         // Générer les cartes Facebook
         let html = '';
-        categoryData.items.forEach(item => {
+        categoryData.items.forEach((item, index) => {
             html += `
             <!-- Carte : ${item.nom} -->
-            <div class="fb-card">
+            <div class="fb-card" data-card-index="${index}">
+                <div class="fb-card-overlay">
+                    <div class="fb-card-overlay-text">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v4m0 6v4a2 2 0 0 1-2 2h-4m-6 0H7a2 2 0 0 1-2-2v-4m0-6V7a2 2 0 0 1 2-2h4"/>
+                        </svg>
+                        <p>Cliquer pour interagir</p>
+                    </div>
+                </div>
                 <div class="fb-feed">
                     <div class="fb-page"
                          data-href="${item.lien}"
@@ -169,6 +177,9 @@ async function loadCategory() {
             window.FB.XFBML.parse();
         }
 
+        // Setup des overlays pour gérer le scroll
+        setupCardOverlays();
+
     } catch (error) {
         console.error('Erreur lors du chargement de la catégorie:', error);
         titleElement.textContent = 'Erreur';
@@ -177,3 +188,64 @@ async function loadCategory() {
         noResults.style.display = 'block';
     }
 }
+
+/**
+ * OPTION 1 : Configure les overlays pour gérer le scroll des cartes
+ * Au clic sur une carte, l'overlay disparaît et la carte devient interactive
+ * Au clic ailleurs, tous les overlays réapparaissent
+ */
+function setupCardOverlays() {
+    const cards = document.querySelectorAll('.fb-card');
+
+    cards.forEach(card => {
+        const overlay = card.querySelector('.fb-card-overlay');
+
+        // Au clic sur l'overlay, le retirer pour permettre l'interaction
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            // Réactiver tous les autres overlays
+            document.querySelectorAll('.fb-card-overlay').forEach(o => {
+                o.classList.remove('hidden');
+            });
+
+            // Cacher cet overlay
+            overlay.classList.add('hidden');
+        });
+    });
+
+    // Au clic ailleurs sur la page, réactiver tous les overlays
+    document.addEventListener('click', function(e) {
+        // Vérifier si le clic n'est pas sur une carte ou son overlay
+        if (!e.target.closest('.fb-card')) {
+            document.querySelectorAll('.fb-card-overlay').forEach(overlay => {
+                overlay.classList.remove('hidden');
+            });
+        }
+    });
+}
+
+/*
+ * OPTION 2 (alternative) : Désactiver complètement le scroll des cartes
+ * Décommentez cette fonction et commentez setupCardOverlays() ci-dessus
+ *
+function disableCardScroll() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .fb-feed iframe {
+            pointer-events: auto !important;
+            overflow: hidden !important;
+        }
+        .fb-card:hover {
+            cursor: pointer;
+        }
+    `;
+    document.head.appendChild(style);
+}
+*/
+
+/*
+ * OPTION 3 (alternative) : Limiter la hauteur des cartes
+ * Modifiez data-height="500" à data-height="300" dans le code HTML ci-dessus
+ * Cela réduit la hauteur des cartes pour éviter qu'elles soient scrollables
+ */
