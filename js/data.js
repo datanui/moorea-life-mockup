@@ -14,7 +14,10 @@ async function loadCSVData() {
 
     try {
         const response = await fetch('moorealife.csv');
-        const csvText = await response.text();
+        // Force l'encodage UTF-8 pour les caractères accentués
+        const buffer = await response.arrayBuffer();
+        const decoder = new TextDecoder('utf-8');
+        const csvText = decoder.decode(buffer);
         cachedCSVData = parseCSV(csvText);
         return cachedCSVData;
     } catch (error) {
