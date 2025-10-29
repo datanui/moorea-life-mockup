@@ -1,4 +1,4 @@
-# Moorea Life - Annuaire Web Mockup
+# Moorea Life - Annuaire Web
 
 Un annuaire web moderne et responsive basé sur des liens Facebook, organisé par catégories hiérarchiques.
 
@@ -9,40 +9,30 @@ Un annuaire web moderne et responsive basé sur des liens Facebook, organisé pa
 - **100% gratuit** - Accessible à tous
 - **100% solidaire** - Soutien à l'économie locale
 - **100% collaboratif** - Contribution communautaire
+- **Compatible GitHub Pages** - Génération dynamique en JavaScript
 
 ## 📁 Structure du projet
 
 ```
 moorea-life-mockup/
 ├── index.html              # Page d'accueil
+├── category.html           # Template pour les pages de catégories
 ├── moorealife.jpg          # Image d'en-tête
 ├── moorealife.csv          # Base de données des liens
-├── generate_pages.py       # Script pour générer les pages
 ├── css/
 │   └── style.css          # Feuille de style
 ├── js/
-│   └── script.js          # Menu et navigation
-└── pages/                 # Pages de catégories générées
-    ├── arts-culture-creationbijoutiers.html
-    ├── arts-culture-creationpareo.html
-    └── arts-culture-creationtatoueur.html
+│   ├── data.js            # Parsing CSV et gestion des données
+│   ├── script.js          # Menu et page d'accueil
+│   └── category.js        # Affichage des pages de catégories
+└── pages/                 # Dossier (vide, pour compatibilité future)
 ```
 
 ## 🚀 Utilisation
 
-### Générer les pages de catégories
+### Ouvrir le site localement
 
-Pour générer ou régénérer les pages de catégories à partir du fichier CSV :
-
-```bash
-python3 generate_pages.py
-```
-
-### Ouvrir le site
-
-Ouvrez simplement `index.html` dans votre navigateur web.
-
-**Note :** Pour que les widgets Facebook fonctionnent correctement, il est recommandé de servir le site via un serveur web local :
+Pour tester le site en local avec les widgets Facebook, utilisez un serveur web local :
 
 ```bash
 # Avec Python 3
@@ -50,6 +40,21 @@ python3 -m http.server 8000
 
 # Puis ouvrez http://localhost:8000 dans votre navigateur
 ```
+
+**Important :** Les widgets Facebook nécessitent que le site soit servi via HTTP/HTTPS (pas en `file://`).
+
+### Déployer sur GitHub Pages
+
+1. **Créer un dépôt GitHub** et pousser le code
+2. **Activer GitHub Pages** dans les paramètres du dépôt :
+   - Aller dans Settings > Pages
+   - Source : Deploy from a branch
+   - Branch : main (ou master) / root
+   - Sauvegarder
+
+3. Le site sera accessible à : `https://[votre-username].github.io/[nom-du-repo]/`
+
+**Aucune configuration supplémentaire n'est nécessaire !** Le site génère les pages dynamiquement en JavaScript côté client.
 
 ## 📝 Format du fichier CSV
 
@@ -67,7 +72,7 @@ ARTS, CULTURE & CRÉATION;Paréo;;Paréo Mana;https://www.facebook.com/Pareomana
 - **Categorie2** : Sous-catégorie (ex: Bijoutiers)
 - **Categorie3** : Sous-sous-catégorie (optionnel)
 - **Nom** : Nom de l'établissement/page
-- **Lien** : URL de la page Facebook
+- **Lien** : URL de la page Facebook (formats acceptés : URL complète, facebook.com/page, ou juste le nom de la page)
 
 ### Logique de navigation :
 
@@ -107,8 +112,10 @@ ARTS, CULTURE & CRÉATION;Paréo;;Paréo Mana;https://www.facebook.com/Pareomana
 
 ### Ajouter des entrées dans l'annuaire
 
-1. Ajoutez des lignes dans `moorealife.csv`
-2. Exécutez `python3 generate_pages.py` pour régénérer les pages
+1. Ajoutez simplement des lignes dans `moorealife.csv`
+2. Le site générera automatiquement le menu et les pages correspondantes
+
+**Aucun script à exécuter !** Tout est géré en JavaScript côté client.
 
 ### Modifier les couleurs
 
@@ -123,9 +130,9 @@ background-color: #1877f2;
 
 - **HTML5** - Structure des pages
 - **CSS3** - Mise en page responsive avec Grid et Flexbox
-- **JavaScript** - Menu interactif et navigation
+- **JavaScript Vanilla** - Génération dynamique et navigation
 - **Facebook SDK** - Intégration des widgets Facebook
-- **Python 3** - Génération automatique des pages
+- **GitHub Pages** - Hébergement statique gratuit
 
 ## 📱 Responsive Design
 
@@ -135,13 +142,59 @@ Le site est entièrement responsive et s'adapte aux différentes tailles d'écra
 - **Tablette** : Événements sur 2 colonnes
 - **Mobile** : Événements sur 1 colonne
 
+## ⚙️ Comment ça fonctionne
+
+### Architecture JavaScript
+
+1. **data.js** :
+   - Charge et parse le fichier CSV
+   - Crée une structure de données hiérarchique en mémoire
+   - Met en cache les données pour éviter de recharger le CSV
+
+2. **script.js** (page d'accueil) :
+   - Génère le menu latéral à partir des catégories
+   - Gère l'ouverture/fermeture du menu
+
+3. **category.js** (pages de catégories) :
+   - Lit les paramètres d'URL (`?cat=...`)
+   - Récupère les items de la catégorie demandée
+   - Génère les cartes Facebook dynamiquement
+
+### Routing
+
+Les URLs utilisent des query parameters :
+- `category.html?cat=arts-culture-creationbijoutiers`
+- Les slugs sont générés automatiquement à partir des noms de catégories
+
 ## 🤝 Contribution
 
 Pour ajouter ou modifier des entrées :
 
-1. Modifiez le fichier `moorealife.csv`
-2. Régénérez les pages : `python3 generate_pages.py`
-3. Testez les changements
+1. **Éditez** le fichier `moorealife.csv`
+2. **Committez** et **poussez** les changements
+3. GitHub Pages mettra automatiquement à jour le site
+
+C'est tout ! Pas de build, pas de génération, tout est dynamique.
+
+## 📦 Fichiers optionnels
+
+- `generate_pages.py` : Script Python historique, conservé pour référence mais **non nécessaire**
+- `pages/*.html` : Anciennes pages générées, **non utilisées** dans la version actuelle
+
+## 🌐 Hébergement et performance
+
+### GitHub Pages
+
+- Hébergement gratuit et illimité
+- HTTPS automatique
+- CDN global pour des performances optimales
+- Mise à jour automatique à chaque push
+
+### Chargement des données
+
+- Le CSV est chargé une seule fois et mis en cache
+- Les widgets Facebook sont chargés en lazy-loading
+- Performance optimale même avec des centaines d'entrées
 
 ## 📄 Licence
 

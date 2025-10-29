@@ -370,6 +370,26 @@ body {
     }
 }
 
+/* Loader */
+.loader {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+    font-size: 18px;
+}
+
+.loader::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    border: 5px solid #f0f2f5;
+    border-top-color: #1877f2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
 /* Animation pour le menu */
 @keyframes slideIn {
     from {
@@ -386,5 +406,11 @@ body {
     }
     to {
         left: -350px;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
 }
