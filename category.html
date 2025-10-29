@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégorie - Moorea Life</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- SDK Facebook : inclure une seule fois par page -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0"></script>
+</head>
+<body>
+    <!-- Bouton Menu -->
+    <button id="menuBtn" class="menu-btn">☰ Menu</button>
+
+    <!-- Menu latéral -->
+    <nav id="sideMenu" class="side-menu">
+        <div class="menu-header">
+            <h2>Catégories</h2>
+            <button id="closeMenuBtn" class="close-btn">&times;</button>
+        </div>
+        <div id="menuContent" class="menu-content">
+            <!-- Le menu sera généré par JavaScript -->
+        </div>
+    </nav>
+
+    <!-- Overlay pour fermer le menu en cliquant à côté -->
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="container">
+        <!-- En-tête de catégorie -->
+        <div class="category-header">
+            <h1 class="category-title" id="categoryTitle">Chargement...</h1>
+            <p class="category-breadcrumb" id="categoryBreadcrumb"></p>
+            <a href="index.html" style="color: #1877f2; text-decoration: none;">← Retour à l'accueil</a>
+        </div>
+
+        <!-- Loader -->
+        <div id="loader" class="loader">
+            <p>Chargement des pages Facebook...</p>
+        </div>
+
+        <!-- Conteneur des cartes Facebook -->
+        <div id="fbCardsContainer" class="fb-cards-container" style="display: none;">
+            <!-- Les cartes seront générées par JavaScript -->
+        </div>
+
+        <!-- Message si aucun résultat -->
+        <div id="noResults" class="empty-section" style="display: none;">
+            <p>Aucune page trouvée dans cette catégorie.</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Moorea Life - Annuaire local</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/category.js"></script>
+</body>
+</html>

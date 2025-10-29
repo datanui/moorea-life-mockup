@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moorea Life - Annuaire 100% local</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- SDK Facebook : inclure une seule fois par page -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0"></script>
+</head>
+<body>
+    <!-- Bouton Menu -->
+    <button id="menuBtn" class="menu-btn">☰ Menu</button>
+
+    <!-- Menu latéral -->
+    <nav id="sideMenu" class="side-menu">
+        <div class="menu-header">
+            <h2>Catégories</h2>
+            <button id="closeMenuBtn" class="close-btn">&times;</button>
+        </div>
+        <div id="menuContent" class="menu-content">
+            <!-- Le menu sera généré par JavaScript -->
+        </div>
+    </nav>
+
+    <!-- Overlay pour fermer le menu en cliquant à côté -->
+    <div id="menuOverlay" class="menu-overlay"></div>
+
+    <div class="container">
+        <!-- En-tête avec image et titre -->
+        <header class="header">
+            <img src="moorealife.jpg" alt="Moorea Life" class="header-image">
+            <h1 class="main-title">Moorea Life</h1>
+            <div class="subtitle">
+                <p>Un annuaire</p>
+                <p>100% local</p>
+                <p>100% à jour</p>
+                <p>100% gratuit</p>
+                <p>100% solidaire</p>
+                <p>100% collaboratif</p>
+            </div>
+        </header>
+
+        <!-- Section Prochain ferry -->
+        <section class="section">
+            <h2 class="section-title">Prochain ferry</h2>
+            <div class="ferry-info">
+                <div class="ferry-item">
+                    <p>Au départ de Moorea à 14h30 avec le Tauati</p>
+                </div>
+                <div class="ferry-item">
+                    <p>Au départ de Papeete à 15h00 avec l'Aremiti</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Événements -->
+        <section class="section">
+            <h2 class="section-title">Évènements</h2>
+            <div class="events-container">
+                <!-- Événement #1 -->
+                <div class="event-card">
+                    <div class="fb-post"
+                         data-href="https://fb.me/e/3YllA2uzt"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://fb.me/e/3YllA2uzt" class="fb-xfbml-parse-ignore">
+                            <a href="https://fb.me/e/3YllA2uzt">Événement</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Événement #2 -->
+                <div class="event-card">
+                    <div class="fb-post"
+                         data-href="https://fb.me/e/5e4mkivo8"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://fb.me/e/5e4mkivo8" class="fb-xfbml-parse-ignore">
+                            <a href="https://fb.me/e/5e4mkivo8">Événement</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Événement #3 -->
+                <div class="event-card">
+                    <div class="fb-post"
+                         data-href="https://fb.me/e/6a6x5FZ0g"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://fb.me/e/6a6x5FZ0g" class="fb-xfbml-parse-ignore">
+                            <a href="https://fb.me/e/6a6x5FZ0g">Événement</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Événement #4 -->
+                <div class="event-card">
+                    <div class="fb-post"
+                         data-href="https://fb.me/e/96paNbZ6V"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://fb.me/e/96paNbZ6V" class="fb-xfbml-parse-ignore">
+                            <a href="https://fb.me/e/96paNbZ6V">Événement</a>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section À la Une -->
+        <section class="section">
+            <h2 class="section-title">À la Une</h2>
+            <div class="news-container">
+                <!-- Post #1 : École du motu -->
+                <div class="news-card">
+                    <h3>École du motu</h3>
+                    <div class="fb-post"
+                         data-href="https://www.facebook.com/groups/moorea.life/permalink/1949182065812363/"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://www.facebook.com/groups/moorea.life/permalink/1949182065812363/" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/groups/moorea.life/permalink/1949182065812363/">Post</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Post #2 : Moorea Échec -->
+                <div class="news-card">
+                    <h3>Moorea Échec</h3>
+                    <div class="fb-post"
+                         data-href="https://www.facebook.com/groups/moorea.life/permalink/1949847269079176/"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://www.facebook.com/groups/moorea.life/permalink/1949847269079176/" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/groups/moorea.life/permalink/1949847269079176/">Post</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Post #3 : I'te Fare -->
+                <div class="news-card">
+                    <h3>I'te Fare</h3>
+                    <div class="fb-post"
+                         data-href="https://www.facebook.com/groups/moorea.life/permalink/1948872779176625/"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://www.facebook.com/groups/moorea.life/permalink/1948872779176625/" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/groups/moorea.life/permalink/1948872779176625/">Post</a>
+                        </blockquote>
+                    </div>
+                </div>
+
+                <!-- Post #4 : AS Collège Pao Pao -->
+                <div class="news-card">
+                    <h3>AS Collège Pao Pao</h3>
+                    <div class="fb-post"
+                         data-href="https://www.facebook.com/groups/461940821326616/permalink/1988819378638745/"
+                         data-width="auto"
+                         data-show-text="true">
+                        <blockquote cite="https://www.facebook.com/groups/461940821326616/permalink/1988819378638745/" class="fb-xfbml-parse-ignore">
+                            <a href="https://www.facebook.com/groups/461940821326616/permalink/1988819378638745/">Post</a>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Sponsors -->
+        <section class="section">
+            <h2 class="section-title">Sponsors</h2>
+            <div class="empty-section">
+                <p>Cette section sera bientôt disponible</p>
+            </div>
+        </section>
+
+        <!-- Section Infos pratiques -->
+        <section class="section">
+            <h2 class="section-title">Infos pratiques</h2>
+            <div class="empty-section">
+                <p>Cette section sera bientôt disponible</p>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Moorea Life - Annuaire local</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
