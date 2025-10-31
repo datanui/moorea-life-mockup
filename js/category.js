@@ -51,12 +51,14 @@ async function loadMenu() {
         for (const [cat2Name, cat2Data] of Object.entries(cat1Data)) {
             // Vérifier s'il y a des sous-sous-catégories
             const hasSubSubCategories = Object.keys(cat2Data.subcategories).length > 0;
+            const itemsCount = cat2Data.items.length;
 
             // Si pas de sous-sous-catégories et qu'il y a des items, rendre le titre cliquable
-            if (!hasSubSubCategories && cat2Data.items.length > 0) {
+            if (!hasSubSubCategories && itemsCount > 0) {
                 const slug = generateSlug(cat1Name, cat2Name, '');
+                const displayName = `${cat2Name} (${itemsCount})`;
                 html += `<div class="menu-subcategory">
-                    <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subcategory-title clickable">${cat2Name}</a>`;
+                    <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subcategory-title clickable">${displayName}</a>`;
             } else {
                 html += `<div class="menu-subcategory">
                     <div class="menu-subcategory-title">${cat2Name}</div>`;
