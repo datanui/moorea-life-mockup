@@ -49,24 +49,38 @@ async function loadMenu() {
             for (const [cat2Name, cat2Data] of Object.entries(cat1Data)) {
                 // Vérifier s'il y a des sous-sous-catégories
                 const hasSubSubCategories = Object.keys(cat2Data.subcategories).length > 0;
+                const itemsCount = cat2Data.items.length;
 
-                // Si pas de sous-sous-catégories, rendre le titre cliquable
-                if (!hasSubSubCategories && cat2Data.items.length > 0) {
+                // Si pas de sous-sous-catégories et qu'il y a des items, rendre le titre cliquable
+                if (!hasSubSubCategories && itemsCount > 0) {
                     const slug = generateSlug(cat1Name, cat2Name, '');
+                    const displayName = `${cat2Name} (${itemsCount})`;
                     html += `<div class="menu-subcategory">
-                        <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subcategory-title clickable">${cat2Name}</a>`;
+                        <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subcategory-title clickable">${displayName}</a>`;
                 } else {
                     html += `<div class="menu-subcategory">
                         <div class="menu-subcategory-title">${cat2Name}</div>`;
                 }
 
                 if (hasSubSubCategories) {
-                    // Il y a des sous-sous-catégories
-                    for (const cat3Name of Object.keys(cat2Data.subcategories)) {
+                    // Il y a des sous-sous-catégories - afficher toutes même celles sans liens
+                    for (const [cat3Name, cat3Items] of Object.entries(cat2Data.subcategories)) {
+                        const linkCount = cat3Items.length;
                         const slug = generateSlug(cat1Name, cat2Name, cat3Name);
-                        html += `<div class="menu-subsubcategory">
-                            <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">${cat3Name}</a>
-                        </div>`;
+
+                        // Afficher le nombre de liens entre parenthèses si > 0
+                        const displayName = linkCount > 0 ? `${cat3Name} (${linkCount})` : cat3Name;
+
+                        // Rendre cliquable uniquement si il y a des liens
+                        if (linkCount > 0) {
+                            html += `<div class="menu-subsubcategory">
+                                <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">${displayName}</a>
+                            </div>`;
+                        } else {
+                            html += `<div class="menu-subsubcategory">
+                                <span class="menu-subsubcategory-link">${displayName}</span>
+                            </div>`;
+                        }
                     }
                 }
 

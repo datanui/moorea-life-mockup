@@ -47,13 +47,15 @@ function parseCSV(csvText) {
         const nom = parts[3].trim();
         const lien = parts[4].trim();
 
-        if (cat1 && nom && lien) {
+        // Inclure toutes les lignes qui ont au moins cat1
+        // Même si elles n'ont pas de nom/lien (pour créer la structure des catégories)
+        if (cat1) {
             data.push({
                 categorie1: cat1,
                 categorie2: cat2,
                 categorie3: cat3,
                 nom: nom,
-                lien: normalizeFBUrl(lien)
+                lien: lien ? normalizeFBUrl(lien) : ''
             });
         }
     }
@@ -98,6 +100,7 @@ async function getCategories() {
         const cat1 = item.categorie1;
         const cat2 = item.categorie2;
         const cat3 = item.categorie3;
+        const hasLink = item.nom && item.lien;
 
         // Initialiser la catégorie 1 si nécessaire
         if (!categories[cat1]) {
@@ -118,16 +121,21 @@ async function getCategories() {
                 if (!categories[cat1][cat2].subcategories[cat3]) {
                     categories[cat1][cat2].subcategories[cat3] = [];
                 }
-                categories[cat1][cat2].subcategories[cat3].push({
-                    nom: item.nom,
-                    lien: item.lien
-                });
+                // Ajouter uniquement si c'est un vrai lien
+                if (hasLink) {
+                    categories[cat1][cat2].subcategories[cat3].push({
+                        nom: item.nom,
+                        lien: item.lien
+                    });
+                }
             } else {
-                // Pas de cat3, ajouter directement à cat2
-                categories[cat1][cat2].items.push({
-                    nom: item.nom,
-                    lien: item.lien
-                });
+                // Pas de cat3, ajouter directement à cat2 seulement si c'est un lien
+                if (hasLink) {
+                    categories[cat1][cat2].items.push({
+                        nom: item.nom,
+                        lien: item.lien
+                    });
+                }
             }
         }
     });
