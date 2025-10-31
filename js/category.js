@@ -49,11 +49,18 @@ async function loadMenu() {
             <div class="menu-category-title">${cat1Name}</div>`;
 
         for (const [cat2Name, cat2Data] of Object.entries(cat1Data)) {
-            html += `<div class="menu-subcategory">
-                <div class="menu-subcategory-title">${cat2Name}</div>`;
-
             // Vérifier s'il y a des sous-sous-catégories
             const hasSubSubCategories = Object.keys(cat2Data.subcategories).length > 0;
+
+            // Si pas de sous-sous-catégories, rendre le titre cliquable
+            if (!hasSubSubCategories && cat2Data.items.length > 0) {
+                const slug = generateSlug(cat1Name, cat2Name, '');
+                html += `<div class="menu-subcategory">
+                    <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subcategory-title clickable">${cat2Name}</a>`;
+            } else {
+                html += `<div class="menu-subcategory">
+                    <div class="menu-subcategory-title">${cat2Name}</div>`;
+            }
 
             if (hasSubSubCategories) {
                 // Il y a des sous-sous-catégories
@@ -63,12 +70,6 @@ async function loadMenu() {
                         <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">${cat3Name}</a>
                     </div>`;
                 }
-            } else if (cat2Data.items.length > 0) {
-                // Pas de sous-sous-catégories, lien direct à cat2
-                const slug = generateSlug(cat1Name, cat2Name, '');
-                html += `<div class="menu-subsubcategory">
-                    <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">Voir ${cat2Name}</a>
-                </div>`;
             }
 
             html += `</div>`;
