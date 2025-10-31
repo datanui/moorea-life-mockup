@@ -166,32 +166,45 @@ a.menu-subcategory-title.clickable:hover {
 
 /* En-tête */
 .header {
+    position: relative;
     text-align: center;
     margin-bottom: 40px;
-    background: white;
-    padding: 30px;
     border-radius: 12px;
+    overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header-image {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    display: block;
+}
+
+.header-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 20px;
+    z-index: 10;
 }
 
 .main-title {
     font-size: 48px;
-    color: #1877f2;
+    color: #ffffff;
     margin-bottom: 20px;
     font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7),
+                 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
     font-size: 20px;
-    color: #555;
+    color: #ffffff;
     line-height: 1.8;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7),
+                 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle p {
@@ -382,6 +395,10 @@ a.menu-subcategory-title.clickable:hover {
 }
 
 @media (max-width: 768px) {
+    .header-text-overlay {
+        padding: 15px;
+    }
+
     .main-title {
         font-size: 36px;
     }
@@ -418,8 +435,8 @@ a.menu-subcategory-title.clickable:hover {
         padding: 10px;
     }
 
-    .header {
-        padding: 20px;
+    .header-text-overlay {
+        padding: 10px;
     }
 
     .section {
