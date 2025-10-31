@@ -50,7 +50,7 @@ async function loadMenu() {
                 // Vérifier s'il y a des sous-sous-catégories
                 const hasSubSubCategories = Object.keys(cat2Data.subcategories).length > 0;
 
-                // Si pas de sous-sous-catégories, rendre le titre cliquable
+                // Si pas de sous-sous-catégories et qu'il y a des items, rendre le titre cliquable
                 if (!hasSubSubCategories && cat2Data.items.length > 0) {
                     const slug = generateSlug(cat1Name, cat2Name, '');
                     html += `<div class="menu-subcategory">
@@ -61,12 +61,24 @@ async function loadMenu() {
                 }
 
                 if (hasSubSubCategories) {
-                    // Il y a des sous-sous-catégories
-                    for (const cat3Name of Object.keys(cat2Data.subcategories)) {
+                    // Il y a des sous-sous-catégories - afficher toutes même celles sans liens
+                    for (const [cat3Name, cat3Items] of Object.entries(cat2Data.subcategories)) {
+                        const linkCount = cat3Items.length;
                         const slug = generateSlug(cat1Name, cat2Name, cat3Name);
-                        html += `<div class="menu-subsubcategory">
-                            <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">${cat3Name}</a>
-                        </div>`;
+
+                        // Afficher le nombre de liens entre parenthèses si > 0
+                        const displayName = linkCount > 0 ? `${cat3Name} (${linkCount})` : cat3Name;
+
+                        // Rendre cliquable uniquement si il y a des liens
+                        if (linkCount > 0) {
+                            html += `<div class="menu-subsubcategory">
+                                <a href="category.html?cat=${encodeURIComponent(slug)}" class="menu-subsubcategory-link">${displayName}</a>
+                            </div>`;
+                        } else {
+                            html += `<div class="menu-subsubcategory">
+                                <span class="menu-subsubcategory-link">${displayName}</span>
+                            </div>`;
+                        }
                     }
                 }
 
